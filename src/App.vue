@@ -1,17 +1,26 @@
 <template>
-  <div>
-    <Modal />
-  </div>
+  <p>{text}</p>
 </template>
 
 <script>
-import Modal from './components/Modal.vue';
 
 export default {
   name: 'App',
-  components: {
-    Modal,
+  components: {  },
+  data() {
+    return {
+      text: "Zangana"
+    }
   },
+  beforeCreate() {
+    console.log("Before create", this.$data, this.$el);
+  },
+  created() {
+    console.log("created", this.$data, this.$el);
+  },
+  mounted() {
+    console.log("Mounted", this.$data, this.$el);
+  }
 }
 </script>
 
