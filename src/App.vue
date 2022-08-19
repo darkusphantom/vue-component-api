@@ -3,48 +3,19 @@
     :pokemon1="pokemon1"
     :pokemon2="pokemon2"
   />
+  <p>Texto: {{ text }}</p>
+  <p>Counter: {{ obj }}</p>
 </template>
 
-<!--script setup-->
-<!-- Si vas a utilizar el export default, asegurate de no tener el atributo setup en el script.
-  De lo contrario tendra conflictos en saber cual elemento se está exportando-->
 <script>
+import { ref, reactive } from 'vue';
 import Pokedex from './components/Pokedex.vue';
-
-/*
-import { defineProps, defineExpose, ref, toRefs, computed, watch, inject } from 'vue';
-const props = defineProps({ //Devuelva la variable props
-  pokemon1: String,
-  pokemon2: String,
-})
-
-const { pokemon1, pokemon2 } = toRefs(props);
-
-const pokemons = computed(() => {
-  return `${text1} y ${text2}`;
-});
-
-const pokes = inject("pokes");
-
-defineExpose({
-  pokes
-})
-
-const btn = ref(null);
-console.log(btn.value);
-
-watch(btn, (valor) => {
-  console.log(valor);
-});
-*/
-
 
 export default {
   name: 'App',
   components: {
     Pokedex,
   },
-  //setup(props, {expose}) {}
   data: () => ({
     pokemon1: {},
     pokemon2: {},
@@ -65,27 +36,32 @@ export default {
         name: pokemon.name,
         image: pokemon.sprites.front_default,
       };
-      console.log(pokemon);
 
       dataPokemon.name === 'torchic'
         ? this.pokemon1 = dataPokemon
         : this.pokemon2 = dataPokemon;
     }
   },
-  beforeCreate() {
-    //console.log("Before create", this.$data, this.$el);
+  setup() {
+    const text = ref('Hola vue');
+    const obj = reactive({
+      counter: 0,
+    });
 
+    setInterval(() => obj.counter++, 500);
+    console.log(obj.counter);
+
+    return {
+      text,
+      obj
+    };
   },
   created() {
-    //console.log("created", this.$data, this.$el);
     setTimeout(() => {
       this.getPokemon(255);
       this.getPokemon(404);
     }, 3000)
   },
-  mounted() {
-    //console.log("Mounted", this.$data, this.$el);
-  }
 }
 </script>
 

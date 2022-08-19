@@ -22,7 +22,7 @@
 </template>
 
 <script setup>
-import { defineProps } from 'vue';
+import { defineProps, ref } from 'vue';
 
 const props = defineProps({
   pokemon1: {
@@ -33,7 +33,7 @@ const props = defineProps({
     type: Object,
     default: () => {},
   },
-})
+});
 </script>
 
 <styles lang="scss">
