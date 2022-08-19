@@ -1,45 +1,99 @@
 <template>
-  <p>Pokemon 1: {{text}}</p>
-  <p>Pokemon 2: {{ text2 }} </p>
+  <Pokedex
+    :pokemon1="pokemon1"
+    :pokemon2="pokemon2"
+  />
 </template>
 
+<!--script setup-->
+<!-- Si vas a utilizar el export default, asegurate de no tener el atributo setup en el script.
+  De lo contrario tendra conflictos en saber cual elemento se está exportando-->
 <script>
+import Pokedex from './components/Pokedex.vue';
+
+/*
+import { defineProps, defineExpose, ref, toRefs, computed, watch, inject } from 'vue';
+const props = defineProps({ //Devuelva la variable props
+  pokemon1: String,
+  pokemon2: String,
+})
+
+const { pokemon1, pokemon2 } = toRefs(props);
+
+const pokemons = computed(() => {
+  return `${text1} y ${text2}`;
+});
+
+const pokes = inject("pokes");
+
+defineExpose({
+  pokes
+})
+
+const btn = ref(null);
+console.log(btn.value);
+
+watch(btn, (valor) => {
+  console.log(valor);
+});
+*/
+
+
 export default {
   name: 'App',
-  components: {  },
+  components: {
+    Pokedex,
+  },
+  //setup(props, {expose}) {}
   data: () => ({
-    text: "Zangana",
-    text2: "Dorime",
+    pokemon1: {},
+    pokemon2: {},
   }),
   methods: {
-    async getPokemon() {
-      const URL = 'https://pokeapi.co/api/v2/pokemon/255';
-      const response = await fetch(URL);
-      const data = await response.json();
+    async getPokemon(id) {
+      try {
+        const URL = `https://pokeapi.co/api/v2/pokemon/${id}`;
+        const response = await fetch(URL);
+        const pokemon = await response.json();
+        this.setPokemon(pokemon);
+      } catch( error ) {
+        console.error(error);
+      }
+    },
+    setPokemon(pokemon) {
+      const dataPokemon = {
+        name: pokemon.name,
+        image: pokemon.sprites.front_default,
+      };
+      console.log(pokemon);
 
-      const URL2 = 'https://pokeapi.co/api/v2/pokemon/404';
-      const response2 = await fetch(URL2);
-      const data2 = await response2.json();
-
-      this.text = data.name;
-      this.text2 = data2.name;
+      dataPokemon.name === 'torchic'
+        ? this.pokemon1 = dataPokemon
+        : this.pokemon2 = dataPokemon;
     }
   },
   beforeCreate() {
-    console.log("Before create", this.$data, this.$el);
+    //console.log("Before create", this.$data, this.$el);
 
   },
   created() {
-    console.log("created", this.$data, this.$el);
-    setTimeout(() => this.getPokemon(), 3000);
+    //console.log("created", this.$data, this.$el);
+    setTimeout(() => {
+      this.getPokemon(255);
+      this.getPokemon(404);
+    }, 3000)
   },
   mounted() {
-    console.log("Mounted", this.$data, this.$el);
+    //console.log("Mounted", this.$data, this.$el);
   }
 }
 </script>
 
 <style lang="scss">
+body {
+  display: grid;
+  place-items: center;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
