@@ -39,17 +39,19 @@ const props = defineProps({
 <styles lang="scss">
 .container {
   display: flex;
-}
-.pokemon {
-  margin: 0 10px;
-}
-.pokemon-name {
-  display: flex;
-  flex-direction: column;
-  text-transform: capitalize;
 
-  span {
-    margin-top: 6px;
+  .pokemon {
+    margin: 0 10px;
+  }
+
+  .pokemon-name {
+    display: flex;
+    flex-direction: column;
+    text-transform: capitalize;
+
+    span {
+      margin-top: 6px;
+    }
   }
 }
 </styles>

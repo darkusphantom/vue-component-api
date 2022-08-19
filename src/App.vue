@@ -4,11 +4,11 @@
     :pokemon2="pokemon2"
   />
   <p>Texto: {{ text }}</p>
-  <p>Counter: {{ obj }}</p>
+  <button type="button" ref="btn">Reset</button>
 </template>
 
 <script>
-import { ref, reactive, watch } from 'vue';
+import { ref, computed, watch } from 'vue';
 import Pokedex from './components/Pokedex.vue';
 
 export default {
@@ -49,21 +49,19 @@ export default {
     }, 3000)
   },
   setup() {
-    const text = ref('Hola vue');
-    const obj = reactive({
-      counter: 0,
+    const firstname = ref("Dorime");
+    const lastname = ref("Ameno");
+
+    const text = computed(()=> (`${firstname.value}  ${lastname.value}`));
+
+    const btn = ref(null);
+    watch(btn, (valor) => {
+      console.log(valor);
     });
-
-    setInterval(() => obj.counter++, 500);
-    console.log(obj.counter);
-
-    watch(obj, (value, prev) => {
-      console.log(value, prev);
-    });
-
+    
     return {
       text,
-      obj
+      btn
     };
   },
 }
