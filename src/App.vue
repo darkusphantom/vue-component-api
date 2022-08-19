@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import { ref, reactive } from 'vue';
+import { ref, reactive, watch } from 'vue';
 import Pokedex from './components/Pokedex.vue';
 
 export default {
@@ -42,6 +42,12 @@ export default {
         : this.pokemon2 = dataPokemon;
     }
   },
+  created() {
+    setTimeout(() => {
+      this.getPokemon(255);
+      this.getPokemon(404);
+    }, 3000)
+  },
   setup() {
     const text = ref('Hola vue');
     const obj = reactive({
@@ -51,16 +57,14 @@ export default {
     setInterval(() => obj.counter++, 500);
     console.log(obj.counter);
 
+    watch(obj, (value, prev) => {
+      console.log(value, prev);
+    });
+
     return {
       text,
       obj
     };
-  },
-  created() {
-    setTimeout(() => {
-      this.getPokemon(255);
-      this.getPokemon(404);
-    }, 3000)
   },
 }
 </script>
