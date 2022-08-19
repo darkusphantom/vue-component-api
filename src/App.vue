@@ -3,10 +3,7 @@
     :pokemon1="pokemon1"
     :pokemon2="pokemon2"
   />
-  <p>Texto: {{ text }}</p>
-  <button type="button" ref="btn">Reset</button>
 </template>
-
 <script>
 import { ref, computed, watch } from 'vue';
 import Pokedex from './components/Pokedex.vue';
@@ -47,22 +44,6 @@ export default {
       this.getPokemon(255);
       this.getPokemon(404);
     }, 3000)
-  },
-  setup() {
-    const firstname = ref("Dorime");
-    const lastname = ref("Ameno");
-
-    const text = computed(()=> (`${firstname.value}  ${lastname.value}`));
-
-    const btn = ref(null);
-    watch(btn, (valor) => {
-      console.log(valor);
-    });
-    
-    return {
-      text,
-      btn
-    };
   },
 }
 </script>

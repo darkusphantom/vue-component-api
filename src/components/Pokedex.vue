@@ -19,10 +19,11 @@
       <img :src="pokemon2.image" :alt="pokemon2.name">
     </div>
   </div>
+  <p>Texto: {{ text }}</p>
+  <button type="button" ref="btn">Reset</button>
 </template>
-
 <script setup>
-import { defineProps, ref } from 'vue';
+import { defineProps, ref, toRefs, watch, computed } from 'vue';
 
 const props = defineProps({
   pokemon1: {
@@ -34,6 +35,19 @@ const props = defineProps({
     default: () => {},
   },
 });
+
+const { pokemon1, pokemon2 } = toRefs(props);
+
+const firstname = ref("Dorime");
+const lastname = ref("Ameno");
+
+const text = computed(()=> (`${firstname.value}  ${lastname.value}`));
+
+const btn = ref(null);
+watch(btn, (valor) => {
+  console.log(valor);
+});
+
 </script>
 
 <styles lang="scss">
